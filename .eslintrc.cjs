@@ -3,6 +3,7 @@ module.exports = {
     'standard',
     'plugin:vue/vue3-recommended',
     'plugin:cypress/recommended',
+    '@vue/eslint-config-typescript',
   ],
   overrides: [
     {
@@ -12,6 +13,16 @@ module.exports = {
       ],
       plugins: ['tailwindcss'],
       extends: ['plugin:tailwindcss/recommended'],
+      rules: {
+        'tailwindcss/no-custom-classname': 'off',
+        'vue/multi-word-component-names': ['error', {
+          "ignores": ['index']
+        }]
+      },
+    },
+    {
+      files: ['*.vue'],
+      parser: 'vue-eslint-parser',
     },
     {
       files: [
@@ -47,5 +58,11 @@ module.exports = {
       functions: 'never',
     }],
     'vue/object-curly-spacing': ['error', 'always'],
+    'semi': [2, "always"],
+  },
+  env: {
+    "browser": true,
+    "amd": true,
+    "node": true
   },
 }

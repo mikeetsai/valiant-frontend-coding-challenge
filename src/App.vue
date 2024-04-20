@@ -1,10 +1,13 @@
-<script setup>
+<script setup lang="ts">
+import RepaymentCalculator from '@/components/RepaymentCalculator';
+
 defineOptions({
   name: 'App',
-})
+});
 </script>
 
 <template>
-  <!-- TODO: Complete the coding challenge here! -->
-  <div />
+  <div class="text-primary-500 py-2">
+    <RepaymentCalculator />
+  </div>
 </template>

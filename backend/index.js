@@ -1,9 +1,9 @@
-import express from 'express'
-import cors from 'cors'
+import express from 'express';
+import cors from 'cors';
 
-const app = express()
+const app = express();
 
-app.use(cors())
+app.use(cors());
 
 app.get('/loan-purposes', (req, res) => {
   res.json([
@@ -22,8 +22,8 @@ app.get('/loan-purposes', (req, res) => {
       value: 'property',
       annualRate: 0.029,
     },
-  ])
-})
+  ]);
+});
 
 app.get('/requested-repayment-periods', (req, res) => {
   res.json([
@@ -39,8 +39,8 @@ app.get('/requested-repayment-periods', (req, res) => {
       label: 'Monthly',
       value: 12,
     },
-  ])
-})
+  ]);
+});
 
 app.get('/requested-term-months', (req, res) => {
   res.json([
@@ -72,10 +72,10 @@ app.get('/requested-term-months', (req, res) => {
       label: '20 years',
       value: 240,
     },
-  ])
-})
+  ]);
+});
 
-app.listen(5000, () => {
+app.listen(4000, () => {
   // eslint-disable-next-line no-console
-  console.log('Server running on port 5000')
-})
+  console.log('Server running on port 4000');
+});
