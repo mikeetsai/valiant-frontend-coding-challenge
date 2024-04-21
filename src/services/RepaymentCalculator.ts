@@ -7,18 +7,20 @@ import type {
 
 const axios: any = useAxios();
 
-export async function useGetLoanPurposesApi (): Promise<LoanPurposesApiResponse> {
+export async function useGetLoanPurposesApi (): Promise<LoanPurposesApiResponse[]> {
   const url = '/loan-purposes';
   const res = await axios.get(url);
   return res.data;
 }
 
-export async function useGetRequestedRepaymentPeriodsApi (): Promise<RequestedRepaymentPeriodsApiResponse> {
+export async function useGetRequestedRepaymentPeriodsApi (): Promise<RequestedRepaymentPeriodsApiResponse[]> {
   const url = '/requested-repayment-periods';
-  return await axios.get(url);
+  const res = await axios.get(url);
+  return res.data;
 }
 
-export async function useGetRequestedTermMonthsApi (): Promise<RequestedTermMonthsApiResponse> {
+export async function useGetRequestedTermMonthsApi (): Promise<RequestedTermMonthsApiResponse[]> {
   const url = '/requested-term-months';
-  return await axios.get(url);
+  const res = await axios.get(url);
+  return res.data;
 }

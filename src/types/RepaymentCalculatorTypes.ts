@@ -1,18 +1,35 @@
-import { useGetRequestedRepaymentPeriodsApi } from '@/services/RepaymentCalculator';
+interface CalcRepaymentRequest {
+  loanAmount: number | string;
+  annualRate: number;
+  repaymentPeriod: number;
+  repaymentTermMonths: number;
+}
 
-interface CalculateRepaymentRequest {}
+interface CalcRepaymentResult {
+  monthlyRepayment: number;
+  totalRepayment: number;
+  repaymentTermMonths: number;
+}
 
-interface CalculateRepaymentResult {}
+interface LoanPurposesApiResponse {
+  label: string;
+  value: string;
+  annualRate: number;
+}
 
-interface LoanPurposesApiResponse {}
+interface RequestedRepaymentPeriodsApiResponse {
+  label: string;
+  value: number;
+}
 
-interface RequestedRepaymentPeriodsApiResponse {}
-
-interface RequestedTermMonthsApiResponse {}
+interface RequestedTermMonthsApiResponse {
+  label: string;
+  value: number;
+}
 
 export type {
-  CalculateRepaymentRequest,
-  CalculateRepaymentResult,
+  CalcRepaymentRequest,
+  CalcRepaymentResult,
   LoanPurposesApiResponse,
   RequestedRepaymentPeriodsApiResponse,
   RequestedTermMonthsApiResponse,
