@@ -12,6 +12,7 @@ export default {
         },
         secondary: {
           500: '#65dc74',
+          600: '#2cbf3d',
         },
         danger: {
           500: '#f74d4d',

@@ -21,11 +21,12 @@ const form: Ref<CalcRepaymentRequest> = ref({
   repaymentTermMonths: 0,
 });
 
-const { loanPurposes, paymentPeriods, termMonths } = fetchData();
 const calcModel: ModelRef<CalcRepaymentResult> = defineModel<CalcRepaymentResult>('calculate', {
   default: {} as CalcRepaymentResult,
   required: true,
 });
+
+const { loanPurposes, paymentPeriods, termMonths } = fetchData();
 
 calculateOnFormWatch();
 
@@ -54,7 +55,11 @@ function fetchData () {
 
 function calculateOnFormWatch () {
   const calculate = () => {
-    const calc = PMT(form.value.annualRate / form.value.repaymentPeriod, form.value.repaymentTermMonths, Number(form.value.loanAmount));
+    const calc = PMT(
+      form.value.annualRate / form.value.repaymentPeriod,
+      form.value.repaymentTermMonths,
+      Number(form.value.loanAmount)
+    );
     calcModel.value.monthlyRepayment = Math.abs(Math.trunc(calc));
     calcModel.value.totalRepayment = calcModel.value.monthlyRepayment * form.value.repaymentTermMonths;
     calcModel.value.repaymentTermMonths = form.value.repaymentTermMonths;
@@ -70,120 +75,125 @@ function calculateOnFormWatch () {
 </script>
 
 <template>
-  <Form class="repayment-calculator">
-    <div class="mb-8 grid grid-cols-2 gap-3">
-      <div class="flex items-center gap-3">
-        <label
-          for="loanAmount"
-          class="text-nowrap font-bold text-primary-500"
-        >
-          I need
-        </label>
-        <div class="relative w-full">
-          <Field
-            id="loanAmount"
-            v-model="form.loanAmount"
-            v-digits-only
-            name="Loan amount"
-            type="text"
-            class="input"
-            placeholder="ie. 30000"
-            :rules="{
-              required: true,
-              numeric: true,
-              between: [1000, 20000000],
-            }"
-          />
-          <ErrorMessage
-            name="Loan amount"
-            class="absolute left-0 top-full block text-xs text-danger-500 first-letter:uppercase"
-          />
+  <div>
+    <h1 class="mb-10 ml-3 text-center text-2xl font-bold text-primary-500">
+      Repayment Calculator
+    </h1>
+    <Form class="repayment-calculator px-6">
+      <div class="mb-8 grid gap-3 md:grid-cols-2">
+        <div class="flex items-center gap-3">
+          <label
+            for="loanAmount"
+            class="text-nowrap font-bold text-primary-500"
+          >
+            I need
+          </label>
+          <div class="relative w-full">
+            <Field
+              id="loanAmount"
+              v-model="form.loanAmount"
+              v-digits-only
+              name="Loan amount"
+              type="text"
+              class="input"
+              placeholder="ie. 30000"
+              :rules="{
+                required: true,
+                numeric: true,
+                between: [1000, 20000000],
+              }"
+            />
+            <ErrorMessage
+              name="Loan amount"
+              class="absolute left-0 top-full block text-xs text-danger-500 first-letter:uppercase"
+            />
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="text-nowrap font-bold text-primary-500">
+            for
+          </div>
+          <select
+            id="loanPurpose"
+            v-model="form.annualRate"
+            class="select"
+          >
+            <option
+              value=""
+              disabled
+              selected
+            >
+              Select loan purpose
+            </option>
+            <option
+              v-for="(option, i) in loanPurposes"
+              :key="i"
+              :value="option.annualRate"
+            >
+              {{ option.label }}
+            </option>
+          </select>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <div class="text-nowrap font-bold text-primary-500">
-          for
-        </div>
-        <select
-          id="loanPurpose"
-          v-model="form.annualRate"
-          class="select"
-        >
-          <option
-            value=""
-            disabled
-            selected
-          >
-            Select loan purpose
-          </option>
-          <option
-            v-for="(option, i) in loanPurposes"
-            :key="i"
-            :value="option.annualRate"
-          >
-            {{ option.label }}
-          </option>
-        </select>
-      </div>
-    </div>
 
-    <div class="grid grid-cols-2 gap-3">
-      <div class="flex items-center gap-3">
-        <label
-          for="repaymentPeriod"
-          class="text-nowrap font-bold text-primary-500"
-        >
-          repaid
-        </label>
-        <select
-          id="repaymentPeriod"
-          v-model="form.repaymentPeriod"
-          class="select"
-        >
-          <option
-            value=""
-            disabled
-            selected
+      <div class="grid gap-3 md:grid-cols-2">
+        <div class="flex items-center gap-3">
+          <label
+            for="repaymentPeriod"
+            class="text-nowrap font-bold text-primary-500"
           >
-            Select a repayment period
-          </option>
-          <option
-            v-for="(option, i) in paymentPeriods"
-            :key="i"
-            :value="option.value"
+            repaid
+          </label>
+          <select
+            id="repaymentPeriod"
+            v-model="form.repaymentPeriod"
+            class="select"
           >
-            {{ option.label }}
-          </option>
-        </select>
+            <option
+              value=""
+              disabled
+              selected
+            >
+              Select a repayment period
+            </option>
+            <option
+              v-for="(option, i) in paymentPeriods"
+              :key="i"
+              :value="option.value"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+        <div class="flex items-center gap-3">
+          <label
+            for="repaymentPeriod"
+            class="text-nowrap font-bold text-primary-500"
+          >
+            over
+          </label>
+          <select
+            id="loanTerm"
+            v-model="form.repaymentTermMonths"
+            class="select"
+          >
+            <option
+              value=""
+              disabled
+              selected
+            >
+              Select a loan term
+            </option>
+            <option
+              v-for="(option, i) in termMonths"
+              :key="i"
+              :value="option.value"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
       </div>
-      <div class="flex items-center gap-3">
-        <label
-          for="repaymentPeriod"
-          class="text-nowrap font-bold text-primary-500"
-        >
-          over
-        </label>
-        <select
-          id="loanTerm"
-          v-model="form.repaymentTermMonths"
-          class="select"
-        >
-          <option
-            value=""
-            disabled
-            selected
-          >
-            Select a loan term
-          </option>
-          <option
-            v-for="(option, i) in termMonths"
-            :key="i"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </select>
-      </div>
-    </div>
-  </Form>
+    </Form>
+  </div>
 </template>

@@ -13,20 +13,32 @@ const totalRepayment = computed(() => addCommasToNumber(getResult.value.totalRep
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-2xl">
-    <RCForm v-model:calculate="getResult" />
+  <div>
+    <div class="mx-auto mb-10 w-full max-w-2xl">
+      <RCForm v-model:calculate="getResult" />
+    </div>
     <div
       v-if="getResult.monthlyRepayment"
-      class="result text-center"
+      class="result bg-light-500 px-6 py-10 text-center shadow-sm"
     >
-      <hr class="my-8 border-light-500">
-      <h2 class="mb-6 text-4xl font-bold text-secondary-500">
+      <h2 class="mb-6 text-4xl font-bold text-secondary-600">
         ${{ monthlyRepayment }} Monthly repayments
       </h2>
 
       <h2 class="text-3xl font-bold text-primary-500">
         ${{ totalRepayment }} Total repayments
       </h2>
+    </div>
+    <div class="flex items-center justify-center py-4 text-center text-primary-500">
+      <span>Do you need a quote?</span>
+      <a
+        href="https://app.valiant.finance/quote/start"
+        class="ml-2 font-semibold text-primary-500 underline hover:text-secondary-600"
+        target="_blank"
+        rel="nofollow"
+      >
+        Start here
+      </a>
     </div>
   </div>
 </template>
