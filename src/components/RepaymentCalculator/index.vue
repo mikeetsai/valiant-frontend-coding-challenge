@@ -1,39 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useGetLoanPurposesApi } from '@/services/RepaymentCalculator';
+import { ref, computed } from 'vue';
+import RCForm from '@/components/RepaymentCalculator/RCForm.vue';
+import { addCommasToNumber } from '@/utils';
 
 import type { Ref } from 'vue';
-import type { LoanPurposesApiResponse } from '@/types/RepaymentCalculatorTypes';
+import type { CalcRepaymentResult } from '@/types/RepaymentCalculatorTypes';
 
-const { loanPurposes } = getLoanPurposes();
+const getResult: Ref<CalcRepaymentResult> = ref({} as CalcRepaymentResult);
+const monthlyRepayment = computed(() => addCommasToNumber(getResult.value.monthlyRepayment));
+const totalRepayment = computed(() => addCommasToNumber(getResult.value.totalRepayment));
 
-function getLoanPurposes () {
-  const loanPurposes: Ref<LoanPurposesApiResponse> = ref({});
-
-  useGetLoanPurposesApi().then((response) => {
-    loanPurposes.value = response;
-  });
-
-  return { loanPurposes };
-}
-
-function updateLoanPurposes () {
-  loanPurposes.value = {
-    key: 'value',
-  };
-}
 </script>
 
 <template>
-  <div class="repayment-calculator bg-secondary-500 p-4">
-    <h1>Repayment Calculator Component</h1>
-    <pre>loadPurposes: {{ loanPurposes }}</pre>
-    <button
-      class="btn"
-      data-el="calculate-button"
-      @click="updateLoanPurposes"
+  <div class="mx-auto w-full max-w-2xl">
+    <RCForm v-model:calculate="getResult" />
+    <div
+      v-if="getResult.monthlyRepayment"
+      class="result text-center"
     >
-      click me
-    </button>
+      <hr class="my-8 border-light-500">
+      <h2 class="mb-6 text-4xl font-bold text-secondary-500">
+        ${{ monthlyRepayment }} Monthly repayments
+      </h2>
+
+      <h2 class="text-3xl font-bold text-primary-500">
+        ${{ totalRepayment }} Total repayments
+      </h2>
+    </div>
   </div>
 </template>

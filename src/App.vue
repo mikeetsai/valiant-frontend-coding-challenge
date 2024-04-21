@@ -7,7 +7,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="text-primary-500 py-2">
+  <div>
     <RepaymentCalculator />
   </div>
 </template>
