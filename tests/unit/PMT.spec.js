@@ -1,4 +1,4 @@
-import PMT from '@/utils/PMT';
+import { PMT } from '@/utils';
 
 describe('PMT', () => {
   it('returns the expected result', () => {
