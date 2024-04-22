@@ -15,7 +15,7 @@ const model: ModelRef<CalcRepaymentRequest['repaymentTermMonths']> = defineModel
 </script>
 
 <template>
-  <div>
+  <div class="repayment-term-months-input">
     <select
       id="loanTermMonths"
       v-model="model"

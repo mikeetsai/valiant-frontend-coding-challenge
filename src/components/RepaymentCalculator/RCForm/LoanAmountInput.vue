@@ -13,7 +13,7 @@ const model: ModelRef<CalcRepaymentRequest['loanAmount']> = defineModel<CalcRepa
 });
 </script>
 <template>
-  <div class="relative w-full">
+  <div class="relative">
     <Field
       id="loanAmount"
       v-model="model"
@@ -30,7 +30,7 @@ const model: ModelRef<CalcRepaymentRequest['loanAmount']> = defineModel<CalcRepa
     />
     <ErrorMessage
       name="Loan amount"
-      class="absolute left-0 top-full block text-xs text-danger-500 first-letter:uppercase"
+      class="left-0 top-full block text-xs text-danger-500 first-letter:uppercase md:absolute"
     />
   </div>
 </template>

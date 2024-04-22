@@ -95,50 +95,56 @@ function calculate () {
       Repayment Calculator
     </h1>
     <Form class="repayment-calculator px-6">
-      <div class="mb-8 grid gap-3 md:grid-cols-2">
-        <div class="flex items-center gap-3">
+      <div class="mb-3 grid gap-3 md:mb-8 md:grid-cols-2">
+        <div class="flex shrink-0 gap-3 md:items-center">
           <label
             for="loanAmount"
-            class="text-nowrap font-bold text-primary-500"
+            class="block w-14 shrink-0 text-nowrap text-right font-bold text-primary-500"
           >
             I need
           </label>
-          <LoanAmountInput v-model="form.loanAmount" />
+          <LoanAmountInput
+            v-model="form.loanAmount"
+            class="w-full"
+          />
         </div>
-        <div class="flex items-center gap-3">
-          <div class="text-nowrap font-bold text-primary-500">
+        <div class="flex w-full gap-3 md:items-center">
+          <div class="block w-14 shrink-0 text-nowrap text-right font-bold text-primary-500">
             for
           </div>
           <LoanPurposeInput
             v-model="form.annualRate"
             :options="loanPurposes"
+            class="w-full"
           />
         </div>
       </div>
 
       <div class="grid gap-3 md:grid-cols-2">
-        <div class="flex items-center gap-3">
+        <div class="flex gap-3 md:items-center">
           <label
             for="repaymentPeriod"
-            class="text-nowrap font-bold text-primary-500"
+            class="block w-14 shrink-0 text-nowrap text-right font-bold text-primary-500"
           >
             repaid
           </label>
           <RepaymentPeriodInput
             v-model="form.repaymentPeriod"
             :options="paymentPeriods"
+            class="w-full"
           />
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex gap-3 md:items-center">
           <label
             for="repaymentPeriod"
-            class="text-nowrap font-bold text-primary-500"
+            class="block w-14 shrink-0 text-nowrap text-right font-bold text-primary-500"
           >
             over
           </label>
           <RepaymentTermMonthsInput
             v-model="form.repaymentTermMonths"
             :options="termMonths"
+            class="w-full"
           />
         </div>
       </div>

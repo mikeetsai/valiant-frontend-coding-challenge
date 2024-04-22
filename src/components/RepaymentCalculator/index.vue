@@ -35,6 +35,7 @@ const totalRepayment = computed(() => addCommasToNumber(getResult.value.totalRep
           class="ml-2 font-semibold text-primary-500 underline hover:text-secondary-600"
           target="_blank"
           rel="nofollow"
+          title="Get a quote from Valiant Finance"
         >
           Start here
         </a>
