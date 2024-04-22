@@ -22,14 +22,7 @@ import type {
 } from '@/types/RepaymentCalculatorTypes';
 
 const $_RCFormStore = useRCFormStore();
-
-const form: Ref<CalcRepaymentRequest> = ref({
-  loanAmount: $_RCFormStore.form.loanAmount,
-  annualRate: $_RCFormStore.form.annualRate,
-  repaymentPeriod: $_RCFormStore.form.repaymentPeriod,
-  repaymentTermMonths: $_RCFormStore.form.repaymentTermMonths,
-});
-
+const form: Ref<CalcRepaymentRequest> = ref({ ...$_RCFormStore.form });
 const calcModel: ModelRef<CalcRepaymentResult> = defineModel<CalcRepaymentResult>('calculate', {
   default: {} as CalcRepaymentResult,
   required: true,
