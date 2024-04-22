@@ -2,8 +2,12 @@
 import { ref, onMounted, readonly, defineModel, watch } from 'vue';
 import { useGetLoanPurposesApi, useGetRequestedRepaymentPeriodsApi, useGetRequestedTermMonthsApi } from '@/services/RepaymentCalculator';
 import { PMT } from '@/utils';
-import { Form, Field, ErrorMessage } from 'vee-validate';
-import { digitsOnly } from '@/directives';
+import { Form } from 'vee-validate';
+
+import LoanAmountInput from '@/components/RepaymentCalculator/RCForm/LoanAmountInput.vue';
+import LoanPurposeInput from '@/components/RepaymentCalculator/RCForm/LoanPurposeInput.vue';
+import RepaymentPeriodInput from '@/components/RepaymentCalculator/RCForm/RepaymentPeriodInput.vue';
+import RepaymentTermMonthsInput from '@/components/RepaymentCalculator/RCForm/RepaymentTermMonthsInput.vue';
 
 import type { Ref, ModelRef } from 'vue';
 import type {
@@ -29,9 +33,6 @@ const calcModel: ModelRef<CalcRepaymentResult> = defineModel<CalcRepaymentResult
 const { loanPurposes, paymentPeriods, termMonths } = fetchData();
 
 calculateOnFormWatch();
-
-// Directives
-const vDigitsOnly = digitsOnly;
 
 function fetchData () {
   const loanPurposes: Ref<LoanPurposesApiResponse[]> = ref([]);
@@ -71,7 +72,6 @@ function calculateOnFormWatch () {
     }
   }, { deep: true });
 }
-
 </script>
 
 <template>
@@ -88,51 +88,16 @@ function calculateOnFormWatch () {
           >
             I need
           </label>
-          <div class="relative w-full">
-            <Field
-              id="loanAmount"
-              v-model="form.loanAmount"
-              v-digits-only
-              name="Loan amount"
-              type="text"
-              class="input"
-              placeholder="ie. 30000"
-              :rules="{
-                required: true,
-                numeric: true,
-                between: [1000, 20000000],
-              }"
-            />
-            <ErrorMessage
-              name="Loan amount"
-              class="absolute left-0 top-full block text-xs text-danger-500 first-letter:uppercase"
-            />
-          </div>
+          <LoanAmountInput v-model="form.loanAmount" />
         </div>
         <div class="flex items-center gap-3">
           <div class="text-nowrap font-bold text-primary-500">
             for
           </div>
-          <select
-            id="loanPurpose"
+          <LoanPurposeInput
             v-model="form.annualRate"
-            class="select"
-          >
-            <option
-              value=""
-              disabled
-              selected
-            >
-              Select loan purpose
-            </option>
-            <option
-              v-for="(option, i) in loanPurposes"
-              :key="i"
-              :value="option.annualRate"
-            >
-              {{ option.label }}
-            </option>
-          </select>
+            :options="loanPurposes"
+          />
         </div>
       </div>
 
@@ -144,26 +109,10 @@ function calculateOnFormWatch () {
           >
             repaid
           </label>
-          <select
-            id="repaymentPeriod"
+          <RepaymentPeriodInput
             v-model="form.repaymentPeriod"
-            class="select"
-          >
-            <option
-              value=""
-              disabled
-              selected
-            >
-              Select a repayment period
-            </option>
-            <option
-              v-for="(option, i) in paymentPeriods"
-              :key="i"
-              :value="option.value"
-            >
-              {{ option.label }}
-            </option>
-          </select>
+            :options="paymentPeriods"
+          />
         </div>
         <div class="flex items-center gap-3">
           <label
@@ -172,26 +121,10 @@ function calculateOnFormWatch () {
           >
             over
           </label>
-          <select
-            id="loanTerm"
+          <RepaymentTermMonthsInput
             v-model="form.repaymentTermMonths"
-            class="select"
-          >
-            <option
-              value=""
-              disabled
-              selected
-            >
-              Select a loan term
-            </option>
-            <option
-              v-for="(option, i) in termMonths"
-              :key="i"
-              :value="option.value"
-            >
-              {{ option.label }}
-            </option>
-          </select>
+            :options="termMonths"
+          />
         </div>
       </div>
     </Form>

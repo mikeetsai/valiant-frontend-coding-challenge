@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import RCForm from '@/components/RepaymentCalculator/RCForm.vue';
+import RCForm from '@/components/RepaymentCalculator/RCForm';
 import { addCommasToNumber } from '@/utils';
 
 import type { Ref } from 'vue';
