@@ -3,12 +3,15 @@ import { ref, onMounted, readonly, defineModel, watch } from 'vue';
 import { useGetLoanPurposesApi, useGetRequestedRepaymentPeriodsApi, useGetRequestedTermMonthsApi } from '@/services/RepaymentCalculator';
 import { PMT } from '@/utils';
 import { Form } from 'vee-validate';
+import { useRCFormStore } from '@/stores/repaymentCalculator';
 
+// @components
 import LoanAmountInput from '@/components/RepaymentCalculator/RCForm/LoanAmountInput.vue';
 import LoanPurposeInput from '@/components/RepaymentCalculator/RCForm/LoanPurposeInput.vue';
 import RepaymentPeriodInput from '@/components/RepaymentCalculator/RCForm/RepaymentPeriodInput.vue';
 import RepaymentTermMonthsInput from '@/components/RepaymentCalculator/RCForm/RepaymentTermMonthsInput.vue';
 
+// @types
 import type { Ref, ModelRef } from 'vue';
 import type {
   LoanPurposesApiResponse,
@@ -18,11 +21,13 @@ import type {
   RequestedRepaymentPeriodsApiResponse,
 } from '@/types/RepaymentCalculatorTypes';
 
+const $_RCFormStore = useRCFormStore();
+
 const form: Ref<CalcRepaymentRequest> = ref({
-  loanAmount: '',
-  annualRate: 0,
-  repaymentPeriod: 0,
-  repaymentTermMonths: 0,
+  loanAmount: $_RCFormStore.form.loanAmount,
+  annualRate: $_RCFormStore.form.annualRate,
+  repaymentPeriod: $_RCFormStore.form.repaymentPeriod,
+  repaymentTermMonths: $_RCFormStore.form.repaymentTermMonths,
 });
 
 const calcModel: ModelRef<CalcRepaymentResult> = defineModel<CalcRepaymentResult>('calculate', {
@@ -32,6 +37,7 @@ const calcModel: ModelRef<CalcRepaymentResult> = defineModel<CalcRepaymentResult
 
 const { loanPurposes, paymentPeriods, termMonths } = fetchData();
 
+calculateOnMounted();
 calculateOnFormWatch();
 
 function fetchData () {
@@ -55,22 +61,31 @@ function fetchData () {
 }
 
 function calculateOnFormWatch () {
-  const calculate = () => {
-    const calc = PMT(
-      form.value.annualRate / form.value.repaymentPeriod,
-      form.value.repaymentTermMonths,
-      Number(form.value.loanAmount)
-    );
-    calcModel.value.monthlyRepayment = Math.abs(Math.trunc(calc));
-    calcModel.value.totalRepayment = calcModel.value.monthlyRepayment * form.value.repaymentTermMonths;
-    calcModel.value.repaymentTermMonths = form.value.repaymentTermMonths;
-  };
-
   watch(form, (v) => {
     if (v.loanAmount && v.annualRate && v.repaymentPeriod && v.repaymentTermMonths) {
       calculate();
+      $_RCFormStore.setFormData(form.value);
     }
   }, { deep: true });
+}
+
+function calculateOnMounted () {
+  onMounted(() => {
+    if (form.value.loanAmount && form.value.annualRate && form.value.repaymentPeriod && form.value.repaymentTermMonths) {
+      calculate();
+    }
+  });
+}
+
+function calculate () {
+  const calc = PMT(
+    form.value.annualRate / form.value.repaymentPeriod,
+    form.value.repaymentTermMonths,
+    Number(form.value.loanAmount)
+  );
+  calcModel.value.monthlyRepayment = Math.abs(Math.trunc(calc));
+  calcModel.value.totalRepayment = calcModel.value.monthlyRepayment * form.value.repaymentTermMonths;
+  calcModel.value.repaymentTermMonths = form.value.repaymentTermMonths;
 }
 </script>
 

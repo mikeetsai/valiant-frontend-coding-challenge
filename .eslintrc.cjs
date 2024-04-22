@@ -59,6 +59,12 @@ module.exports = {
     }],
     'vue/object-curly-spacing': ['error', 'always'],
     'semi': [2, "always"],
+    'camelcase': [
+      'error', {
+      'properties': 'never',
+      'ignoreDestructuring': true,
+      'allow': ["^\\$_\\w+"]}
+    ],
   },
   env: {
     "browser": true,

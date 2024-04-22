@@ -11,4 +11,16 @@ const addCommasToNumber = (x: number): string => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-export { PMT, addCommasToNumber };
+const getPersistedState = (key: string): any => {
+  const value = localStorage.getItem(key);
+  if (value) {
+    return JSON.parse(value);
+  }
+  return null;
+};
+
+const setPersistedState = (key: string, state: any): void => {
+  localStorage.setItem(key, JSON.stringify(state));
+};
+
+export { PMT, addCommasToNumber, getPersistedState, setPersistedState };
