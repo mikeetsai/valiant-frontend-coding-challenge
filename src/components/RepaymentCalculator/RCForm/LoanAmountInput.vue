@@ -27,10 +27,12 @@ const model: ModelRef<CalcRepaymentRequest['loanAmount']> = defineModel<CalcRepa
         numeric: true,
         between: [1000, 20000000],
       }"
+      data-name="loan-amount-field"
     />
     <ErrorMessage
       name="Loan amount"
       class="left-0 top-full block text-xs text-danger-500 first-letter:uppercase md:absolute"
+      data-name="loan-amount-error-message"
     />
   </div>
 </template>

@@ -9,22 +9,30 @@ import type { CalcRepaymentResult } from '@/types/RepaymentCalculatorTypes';
 const getResult: Ref<CalcRepaymentResult> = ref({} as CalcRepaymentResult);
 const monthlyRepayment = computed(() => addCommasToNumber(getResult.value.monthlyRepayment));
 const totalRepayment = computed(() => addCommasToNumber(getResult.value.totalRepayment));
-
 </script>
 
 <template>
   <div>
     <div class="mx-auto mb-10 w-full max-w-2xl">
-      <RCForm v-model:calculate="getResult" />
+      <RCForm
+        v-model:result="getResult"
+        data-name="repayment-calculator-form-component"
+      />
     </div>
 
     <template v-if="getResult.monthlyRepayment">
       <div class="result bg-light-500 px-6 py-10 text-center shadow-sm">
-        <h2 class="mb-6 text-4xl font-bold text-secondary-600">
+        <h2
+          class="mb-6 text-4xl font-bold text-secondary-600"
+          data-name="monthly-repayment-value"
+        >
           ${{ monthlyRepayment }} Monthly repayments
         </h2>
 
-        <h2 class="text-3xl font-bold text-primary-500">
+        <h2
+          class="text-3xl font-bold text-primary-500"
+          data-name="total-repayment-value"
+        >
           ${{ totalRepayment }} Total repayments
         </h2>
       </div>

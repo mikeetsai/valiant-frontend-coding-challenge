@@ -20,6 +20,7 @@ const model: ModelRef<CalcRepaymentRequest['repaymentPeriod']> = defineModel<Cal
       id="repaymentPeriod"
       v-model="model"
       class="select"
+      data-name="repayment-periods-field"
     >
       <option
         value=""

@@ -18,15 +18,19 @@
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "pinia": "^2.1.7",
+    "sinon": "^17.0.1",
     "vee-validate": "^4.12.6",
+    "vi-fetch": "^0.8.0",
     "vue": "^3.4.19",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "wait-for-expect": "^3.0.2"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.12.7",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/test-utils": "^2.4.5",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.18",
     "concurrently": "^8.2.2",
@@ -41,6 +45,7 @@
     "eslint-plugin-tailwindcss": "^3.14.3",
     "eslint-plugin-vitest": "^0.3.24",
     "eslint-plugin-vue": "^9.22.0",
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.35",
     "sass": "^1.75.0",
     "tailwindcss": "^3.4.1",

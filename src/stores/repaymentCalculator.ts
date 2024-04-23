@@ -10,9 +10,9 @@ export const useRCFormStore = defineStore('repaymentCalculatorForm', () => {
 
   const defaultForm: CalcRepaymentRequest = {
     loanAmount: '',
-    annualRate: 0,
-    repaymentPeriod: 0,
-    repaymentTermMonths: 0,
+    annualRate: 0.1,
+    repaymentPeriod: 12,
+    repaymentTermMonths: 24,
   };
 
   const form: Ref<CalcRepaymentRequest> = ref(persistedState || defaultForm);

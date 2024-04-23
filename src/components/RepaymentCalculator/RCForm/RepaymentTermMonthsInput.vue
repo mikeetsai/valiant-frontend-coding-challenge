@@ -20,6 +20,7 @@ const model: ModelRef<CalcRepaymentRequest['repaymentTermMonths']> = defineModel
       id="loanTermMonths"
       v-model="model"
       class="select"
+      data-name="repayment-term-months-field"
     >
       <option
         value=""

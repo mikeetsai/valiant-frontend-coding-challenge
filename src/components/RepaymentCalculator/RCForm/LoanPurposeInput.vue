@@ -20,6 +20,7 @@ const model: ModelRef<CalcRepaymentRequest['annualRate']> = defineModel<CalcRepa
       id="loanPurpose"
       v-model="model"
       class="select"
+      data-name="loan-purpose-field"
     >
       <option
         value=""
