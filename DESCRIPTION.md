@@ -1,1 +1,24 @@
 TODO: Quick scratch breakdown of your to-dos, how you broke up the different tasks and any QA / tests you did.
+ 
+- Analyse tasks
+- - Write draft features and test cases
+- - ie. Feat. as a user, I want to be able to enter only numbers in the input
+- - ie. Feat. as a user, I want to be able to select loan purpose
+- - ie. Test. allow only digits in the input
+- Install required packages.
+- Setup eslint config, ts-config, code editor config and automations
+- High level folder structure. ie src/components, src/store, src/assets, src/types...etc
+- Define Component level structure
+- Define Assets and css structure
+- Define Test structures
+- Setup API services
+- Build components
+- Build utils functions and stores
+- Build UI with HTML/CSS
+- Build UI Mobile responsive
+- Optimise UI/UX
+- Optimise and refactoring code for better readability, performance, maintainability and testability
+- Write unit tests and component tests
+- Write e2e tests
+- QA, Test, linting, remove unused packages and fix bugs
+- Deliver

@@ -7,7 +7,7 @@
     "backend": "node ./backend/index.js",
     "dev": "concurrently \"node ./backend/index.js\" \"vite\" \"vitest\" \"eslint --ext .js,.vue src\"",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "concurrently \"vite preview\" \"node ./backend/index.js\"",
     "lint": "eslint --ext .js,.vue src",
     "test:e2e": "cypress open",
     "test:unit": "vitest"
@@ -20,10 +20,8 @@
     "pinia": "^2.1.7",
     "sinon": "^17.0.1",
     "vee-validate": "^4.12.6",
-    "vi-fetch": "^0.8.0",
     "vue": "^3.4.19",
-    "vue-router": "^4.3.2",
-    "wait-for-expect": "^3.0.2"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",
