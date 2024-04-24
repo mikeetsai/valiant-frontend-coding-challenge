@@ -27,7 +27,7 @@ const resultModel: ModelRef<CalcRepaymentResult> = defineModel<CalcRepaymentResu
   default: {} as CalcRepaymentResult,
   required: true,
 });
-
+const rcFormRef = ref<InstanceType<typeof Form>>();
 const { loanPurposes, paymentPeriods, termMonths } = fetchData();
 
 calculateOnMounted();
@@ -54,9 +54,17 @@ function fetchData () {
 }
 
 function calculateOnFormWatch () {
-  watch(form, (v) => {
+  watch(form, async (v) => {
+    const isValidate = await validate();
+
+    if (!isValidate.valid) {
+      $_RCFormStore.resetFormData();
+      resultModel.value = {} as CalcRepaymentResult;
+      return false;
+    }
+
     if (v.loanAmount && v.annualRate && v.repaymentPeriod && v.repaymentTermMonths) {
-      calculate();
+      await calculate();
     }
   }, { deep: true });
 }
@@ -69,7 +77,7 @@ function calculateOnMounted () {
   });
 }
 
-function calculate () {
+async function calculate () {
   const calc = PMT(
     form.value.annualRate / form.value.repaymentPeriod,
     form.value.repaymentTermMonths,
@@ -80,6 +88,10 @@ function calculate () {
   resultModel.value.repaymentTermMonths = form.value.repaymentTermMonths;
 
   $_RCFormStore.setFormData(form.value);
+}
+
+async function validate () {
+  return await rcFormRef.value?.validate();
 }
 </script>
 
@@ -92,6 +104,7 @@ function calculate () {
       Repayment Calculator
     </h1>
     <Form
+      ref="rcFormRef"
       class="rc-form px-6"
       data-name="rc-form"
     >

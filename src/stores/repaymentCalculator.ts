@@ -22,5 +22,10 @@ export const useRCFormStore = defineStore('repaymentCalculatorForm', () => {
     setPersistedState('repaymentCalculatorForm', data);
   }
 
-  return { form, setFormData };
+  function resetFormData (): void {
+    form.value = defaultForm;
+    setPersistedState('repaymentCalculatorForm', defaultForm);
+  }
+
+  return { form, setFormData, resetFormData };
 });
